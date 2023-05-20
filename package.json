@@ -3,6 +3,8 @@
   "version": "1.0.1",
   "description": "A simple synchronous lockfile",
   "author": "Patricio Palladino <email@patriciopalladino.com>",
+  "homepage": "https://github.com/alcuadrado/simple-lockfile#readme",
+  "repository": "github:alcuadrado/simple-lockfile",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

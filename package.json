@@ -17,6 +17,7 @@
     "test": "mocha",
     "prettier": "prettier --write src/**/*.ts",
     "prepare": "tsc",
+    "prepublishOnly": "npm test",
     "clean": "rm -rf dist"
   },
   "license": "MIT",

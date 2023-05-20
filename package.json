@@ -1,6 +1,6 @@
 {
   "name": "simple-lockfile",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple synchronous lockfile",
   "author": "Patricio Palladino <email@patriciopalladino.com>",
   "main": "dist/index.js",
@@ -14,7 +14,7 @@
   "scripts": {
     "test": "mocha",
     "prettier": "prettier --write src/**/*.ts",
-    "prepublish": "tsc",
+    "prepare": "tsc",
     "clean": "rm -rf dist"
   },
   "license": "MIT",

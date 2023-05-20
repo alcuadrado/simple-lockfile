@@ -2,7 +2,7 @@ import { unlinkSync } from "fs";
 import { createFileSync } from "./create-file";
 
 /**
- * An error thrown when the lockfile already existed.
+ * This error is thrown if a lockfile is already present at the time of creation.
  */
 export class LockfileAlreadyExistedError extends Error {
   constructor(lockfilePath: string) {
@@ -11,8 +11,7 @@ export class LockfileAlreadyExistedError extends Error {
 }
 
 /**
- * An error thrown when the lockfile could not be acquired despite
- * it not existing.
+ * This error is thrown if the lockfile doesn't exist but it still can't be acquired.
  */
 export class CouldNotAcquireLockfileError extends Error {
   constructor(lockfilePath: string, cause: Error) {
@@ -22,7 +21,7 @@ export class CouldNotAcquireLockfileError extends Error {
 }
 
 /**
- * An error thrown when the release of the lockfile failed.
+ * This error is thrown if there's an issue when trying to delete the lockfile.
  */
 export class CouldNotReleaseLockfileError extends Error {
   constructor(lockfilePath: string, cause: Error) {
@@ -32,21 +31,18 @@ export class CouldNotReleaseLockfileError extends Error {
 }
 
 /**
- * Calls the criticalSection function only if and only if the lockfile was acquired.
+ * Executes the criticalSection function if and only if the lockfile is successfully acquired.
  *
- * If the lockfile already existed it will not be acquired and a
- * LockfileAlreadyExistedError exception will be thrown.
+ * This function will throw a `LockfileAlreadyExistedError` if the lockfile already exists.
  *
- * If the lockfile doesn't exist and it can't be acquired, a
- * CouldNotAcquireLockfileError exception will be thrown.
+ * If the lockfile doesn't exist but can't be acquired, it will throw a `CouldNotAcquireLockfileError`.
  *
- * If the lokcfile can't be released (e.g. the user deleted it manually) a
- * CouldNotReleaseLockfileError exception will be thrown. Depending on your
- * criticalSection you may ignore this error, try to recover from it, or
- * inform your users about it.
+ * If the lockfile can't be released (e.g., if it has been manually deleted), it will throw a
+ * `CouldNotReleaseLockfileError`. Depending on your criticalSection, you may choose to ignore
+ * this error, attempt to recover from it, or inform your users about it.
  *
- * @param pathToLockfile The path to the lockfile.
- * @param criticalSection The operation protected by the lockfile.
+ * @param {string} pathToLockfile - The path to the lockfile.
+ * @param {() => void} criticalSection - The operation that needs to be executed under the protection of the lockfile.
  */
 export function withLockfile(
   pathToLockfile: string,

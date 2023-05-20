@@ -1,10 +1,10 @@
 # simple-lockfile
 
-An implementation of a lockfile that strives to be as simlpe as possible, with 0 dependencies.
+`simple-lockfile` is a straightforward lockfile implementation with zero dependencies. This minimalist package provides optimal functionality for applications that require exclusive lockfile acquisition before operating and prompt the user to manually resolve issues when failing to acquire it.
 
-This package is ideal for applications don't perform any functionality if they can't acquire a lockfile, and ask the user to fix the situation.
+## Installation
 
-## Install
+Install simple-lockfile via npm using the following command:
 
 ```bash
 npm install simple-lockfile
@@ -12,11 +12,11 @@ npm install simple-lockfile
 
 ## Usage
 
-This module exports a single function, `withLockfile`, that takes a path to a lockfile and a function that should be run if and only if the lockfile is acquired.
+The package exports a single function, `withLockfile`, which requires a path to a lockfile and a callback function. This callback is invoked only if the lockfile is successfully acquired.
 
-The function you pass to `withLockfile` shouldn't throw. If it does and `withLockfile` can't delete the lockfile, your exception won't be accessible.
+The callback function provided to `withLockfile` must be designed not to throw exceptions. If it does and `withLockfile` fails to delete the lockfile, you won't be able to retrieve your exception.
 
-Here's an example of how to use it correctly:
+Below is a sample usage of `simple-lockfile`:
 
 ```typescript
 import process from "process";
@@ -32,11 +32,11 @@ try {
   });
 } catch (error) {
   if (error instanceof LockfileAlreadyExistedError) {
-    console.error(`Could not acquire the lockfile my-app.lockfile that's needed to run my-app.
+    console.error(`Unable to acquire the necessary lockfile (my-app.lockfile) to run my-app.
 
-Make sure you aren't running another instance of my-app and try again.
+Please ensure no other instance of my-app is currently running and try again.
 
-If this error presists, delete my-app.lockfile and try again.
+If the problem persists, manually delete my-app.lockfile and reattempt.
 `);
     process.exit(1);
   }
@@ -45,15 +45,12 @@ If this error presists, delete my-app.lockfile and try again.
 }
 ```
 
-See `withLockfile`'s documentation to learn about the different exceptions that it throws.
+Refer to the `withLockfile` function documentation for more details on the exceptions it may throw.
 
 ## Limitations
 
-This package has the following limitations:
+Please note the following constraints associated with `simple-lockfile`:
 
-- Lockfiles do not expire. If a process accidentally leaves an existing lockfile, the user will need to delete it.
-- `withLockfile` only tries to acquire the lockfile once, without any retry.
-- This module may not work on [NFS](https://en.wikipedia.org/wiki/Network_File_System). See [`proper-lockfile`](https://www.npmjs.com/package/proper-lockfile) if you need support for it.
--
-
-This package does try to acquire the lock more than once.
+- Lockfiles do not expire. In case a process inadvertently leaves a lockfile, it must be manually deleted by the user.
+- The `withLockfile` function attempts to acquire the lockfile only once without any retries.
+- This module may not function properly with the [Network File System (NFS)](https://en.wikipedia.org/wiki/Network_File_System). For NFS support, consider using `proper-lockfile`.

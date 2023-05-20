@@ -1,11 +1,20 @@
 import { openSync, constants, closeSync } from "fs";
 
 /**
- * Creates a file in a synchronous way, waiting for its (empty) contents
- * and metadata to be flushed, and trying to avoid any caching.
+ * Synchronously creates an empty file with flushed metadata, minimizing caching.
  *
- * Note that this method calls `openSync` internally and doesn't handle
- * any of its errors.
+ * This function works by calling `openSync` internally, which sets certain flags to define the file's creation and access behavior.
+ *
+ * It's important to note that this function does not handle any errors thrown by `openSync`. Therefore, users should be prepared to handle any potential file system errors that may arise.
+ *
+ * @param path - The string representing the path where the file should be created.
+ *
+ * @example
+ * ```
+ * import { createFileSync } from '...';
+ *
+ * createFileSync('./path/to/new/file');
+ * ```
  */
 export function createFileSync(path: string) {
   const openFlags =

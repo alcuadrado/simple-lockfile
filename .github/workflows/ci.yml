@@ -24,7 +24,7 @@ jobs:
         run: npm test
 
   test_on_macos:
-    name: Test on Windows with Node 14
+    name: Test on MacOS with Node 14
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
